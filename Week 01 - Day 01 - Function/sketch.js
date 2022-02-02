@@ -18,7 +18,7 @@ function draw(){
 function drawBox(xOffset, yOffset, boxWidth, boxHeight, spacing, numBoxes){
     fill(255, 0, 0);
     noStroke();
-    let totalSpace = boxSize + spacing;
+    let totalSpace = boxWidth + spacing;
     for(let i = 0; i < numBoxes; i++){
         rect(i * totalSpace + xOffset, totalSpace + yOffset, boxWidth, boxHeight);
     }
