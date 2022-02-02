@@ -4,7 +4,8 @@ let yOffset = 100;
 let spacing = 5;
 let numBoxes = 5;
 
-
+let boxWidth = 25;
+let boxHeight = 25;
 
 function setup(){
     createCanvas(500, 500);
@@ -15,7 +16,7 @@ function draw(){
    drawBox();
 }
 
-function drawBox(xOffset, yOffset, boxWidth, boxHeight, spacing, numBoxes){
+function drawBox(){
     fill(255, 0, 0);
     noStroke();
     let totalSpace = boxWidth + spacing;
