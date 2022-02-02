@@ -1,6 +1,10 @@
 let xOffset = 100;
 let yOffset = 100;
 
+let spacing = 5;
+let numBoxes = 5;
+
+
 
 function setup(){
     createCanvas(500, 500);
@@ -11,15 +15,14 @@ function draw(){
    drawBox();
 }
 
-function drawBox(xOffset, yOffset, boxSize, spacing, colBoxes, rowBoxes){
+function drawBox(xOffset, yOffset, boxWidth, boxHeight, spacing, numBoxes){
     fill(255, 0, 0);
     noStroke();
     let totalSpace = boxSize + spacing;
-    for(let row = 0; row < rowBoxes; row++){
-        for(let col = 0; col < colBoxes; col++){
-            rect(row * totalSpace + xOffset, col * totalSpace + yOffset, boxSize, boxSize);
-        }
+    for(let i = 0; i < numBoxes; i++){
+        rect(i * totalSpace + xOffset, totalSpace + yOffset, boxWidth, boxHeight);
     }
+    
 }
 
 
