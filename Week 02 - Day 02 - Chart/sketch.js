@@ -4,7 +4,8 @@ let chartHeight = 400;
 let maxValue;
 let tickInc;
 
-let data = [10, 70, 60, 30, 40, 80, 90, 90, 110];
+let data = [10, 70, 60, 30, 40, 80, 90, 90, 110, 20, 20, 20, 10];
+let dataLabels = ["GN 01", "GN 02", "GN03", "GN04", "GN05", "GN06", "GN07", "GN08", "GN09", "GN10", "GN11", "GN12", "GN13"];
 let scaledData = [];
 
 let spacing = 5;
@@ -75,6 +76,7 @@ function draw() {
         textAlign(CENTER)
         fill('cyan');
         text(round(data[i]), dataX + (totalSpacing * i), -scaledData[i] - spacing);
+        text(dataLabels[i], dataX + (totalSpacing * i), spacing * 2);
     }
 
 
