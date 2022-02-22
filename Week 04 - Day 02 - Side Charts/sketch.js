@@ -19,6 +19,8 @@ function setup() {
     firstChart.posX = 100;
     firstChart.posY = 700;
     firstChart.updateValue();
+    firstChart.rotateLabels = false;
+
 
 
 }
@@ -28,5 +30,6 @@ function setup() {
 function draw() {
     background(0);
 
+    firstChart.updateValue();
     firstChart.render();
 }

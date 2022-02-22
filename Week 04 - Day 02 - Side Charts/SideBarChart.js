@@ -9,14 +9,18 @@ class HorizontalBarChart {
 
         this.posX = 10;
         this.posY = 10;
+        this.textspacing = 20;
+
+        this.title = "Fruit Sales"
+
 
         this.spacing = 5;
         this.margin = 30;
         this.numTicks = 10;
+
         this.tickSpacing;
         this.barWidth;
         this.availableWidth;
-
         this.tickIncrements;
         this.maxValue;
 
@@ -53,7 +57,7 @@ class HorizontalBarChart {
         translate(this.posX, this.posY);
         //chart
 
-
+        this.drawTitle();
         this.drawAxis();
         this.drawTickLines();
         this.drawVerticalLines();
@@ -64,6 +68,11 @@ class HorizontalBarChart {
     scaledData(num) {
         return map(num, 0, this.maxValue, 0, this.chartWidth);
     }
+
+    drawTitle() {
+        textAlign(CENTER, CENTER);
+        text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
+    };
 
     drawTickLines() {
         for (let i = 0; i <= this.numTicks; i++) {
@@ -114,7 +123,7 @@ class HorizontalBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(this.data[i].total, -this.scaledData(-this.data[i].total), -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
+                text(this.data[i].total, -this.scaledData(-this.data[i].total) + this.textspacing, -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
             }
 
 
@@ -126,9 +135,10 @@ class HorizontalBarChart {
                     fill(255);
                     textSize(14);
                     textAlign(CENTER, BOTTOM);
-                    translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
+                    // translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
+                    translate(-(this.margin), this.barWidth / 2, 20)
                     rotate(PI / 2);
-                    text(this.data[i].name, 0, 0);
+                    text(this.data[i].name, -((this.barWidth + this.spacing) * i), 0);
                     pop();
                 } else {
                     push();
