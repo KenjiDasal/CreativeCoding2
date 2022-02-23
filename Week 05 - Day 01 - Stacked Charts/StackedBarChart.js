@@ -9,6 +9,7 @@ class StackedBarChart {
         this.chartHeight = 300;
 
         this.title = "Genshin Impact Rerun Sales"
+        this.sideTitle = "Genshin Impact Sales(Millions)"
 
         this.posX = 50;
         this.posY = 400;
@@ -25,9 +26,9 @@ class StackedBarChart {
 
 
         this.colors = [
-            color('#ffe066'),
-            color('#ffab66 '),
-            color('#f68f6a '),
+            color('#242951'),
+            color('#246390 '),
+            color('#02A6EC'),
             color('#f3646a ')
         ];
 
@@ -49,7 +50,8 @@ class StackedBarChart {
     calculateMaxValue() {
         let h = this.data[0].total.length
         console.log(h)
-        let listValues = this.data.map(function(x) { return max(x.total[h - 3]) + max(x.total[h - 2]) + max(x.total[h - 1]) });
+        let listValues = this.data.map(function(x) { return max(x.total) });
+        // let listValues = this.data.map(function(x) { return max(x.total[h - 3]) + max(x.total[h - 2]) + max(x.total[h - 1]) });
         this.maxValue = round(max(listValues));
         this.tickIncrements = this.maxValue / this.numTicks;
         console.log(this.maxValue)
@@ -61,6 +63,7 @@ class StackedBarChart {
         //chart
 
         this.drawTitle();
+        this.drawSideTitle();
         this.drawAxis();
         this.drawTickLines();
         this.drawHorizontalLines();
@@ -70,6 +73,15 @@ class StackedBarChart {
     drawTitle() {
         textAlign(CENTER, CENTER);
         text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
+    };
+
+    drawSideTitle() {
+        angleMode(DEGREES)
+        push();
+        textAlign(CENTER, CENTER);
+        rotate(270);
+        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.spacing + this.margin) * 2);
+        pop();
     };
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
@@ -95,7 +107,7 @@ class StackedBarChart {
     drawHorizontalLines() {
         for (let i = 0; i <= this.numTicks; i++) {
             //horizontal line
-            stroke(255, 100);
+            stroke(255, 200);
             line(0, this.tickSpacing * -i, this.chartWidth, this.tickSpacing * -i);
 
         }
@@ -115,23 +127,17 @@ class StackedBarChart {
             fill(this.colors[colorNum]);
 
             push();
-            for (let j = 0; j < this.data[i].total.length; j++) {
+            for (let j = 0; j < this.data[i].values.length; j++) {
                 let colorNum = j % 4;
                 //bars
                 push();
                 fill(this.colors[colorNum]);
                 noStroke();
-                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].total[j]));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].values[j]));
 
-                if (this.showValues) {
-                    noStroke();
-                    fill(255);
-                    textSize(16);
-                    textAlign(CENTER, BOTTOM);
-                    text(this.data[i].total[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].total[j]));
-                }
+
                 pop();
-                translate(0, j - this.scaledData(this.data[i].total[j]));
+                translate(0, j - this.scaledData(this.data[i].values[j]));
 
             }
             pop();
@@ -139,8 +145,8 @@ class StackedBarChart {
 
             //numbers (text)
             push();
-            for (let j = 0; j < this.data[i].total.length; j++) {
-                let colorNum = j % 4;
+            for (let j = 0; j < this.data[i].values.length; j++) {
+
                 //bars
                 push();
                 if (this.showValues) {
@@ -148,10 +154,10 @@ class StackedBarChart {
                     fill(255);
                     textSize(16);
                     textAlign(CENTER, BOTTOM);
-                    text(this.data[i].total[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].total[j]));
+                    text(this.data[i].values[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].values[j]));
                 }
                 pop();
-                translate(0, j - this.scaledData(this.data[i].total[j]));
+                translate(0, j - this.scaledData(this.data[i].values[j]));
 
             }
             pop();
