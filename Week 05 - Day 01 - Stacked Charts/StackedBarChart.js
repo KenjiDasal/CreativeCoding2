@@ -80,7 +80,7 @@ class StackedBarChart {
         push();
         textAlign(CENTER, CENTER);
         rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.spacing + this.margin) * 2);
+        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.barWidth - this.margin + (this.spacing * 2)) * 2);
         pop();
     };
 
