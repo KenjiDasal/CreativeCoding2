@@ -11,8 +11,8 @@ class StackedBarChart {
         this.title = "Genshin Impact Rerun Sales"
         this.sideTitle = "Genshin Impact Sales(Millions)"
 
-        this.posX = 50;
-        this.posY = 400;
+        this.posX = 0;
+        this.posY = 0;
 
         this.spacing = 5;
         this.margin = 30;
@@ -59,6 +59,7 @@ class StackedBarChart {
     }
 
     render() {
+        push();
         translate(this.posX, this.posY);
         //chart
 
@@ -68,6 +69,7 @@ class StackedBarChart {
         this.drawTickLines();
         this.drawHorizontalLines();
         this.drawRects();
+        pop();
     }
 
     drawTitle() {
@@ -80,7 +82,7 @@ class StackedBarChart {
         push();
         textAlign(CENTER, CENTER);
         rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.spacing + this.margin) * 2);
+        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.barWidth - this.margin + (this.spacing * 2)) * 2);
         pop();
     };
 

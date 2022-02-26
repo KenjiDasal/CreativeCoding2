@@ -1,4 +1,4 @@
-class StackedBarChart {
+class FullStackedBarChart {
     constructor(_data) {
         //let listValues = data.map(function(x) { return x.total });
 
@@ -11,8 +11,8 @@ class StackedBarChart {
         this.title = "Genshin Impact Rerun Sales"
         this.sideTitle = "Genshin Impact Sales(Millions)"
 
-        this.posX = 50;
-        this.posY = 400;
+        this.posX = 0;
+        this.posY = 0;
 
         this.spacing = 5;
         this.margin = 30;
@@ -22,6 +22,7 @@ class StackedBarChart {
         this.availableWidth;
 
         this.tickIncrements;
+        this.listValues;
         this.maxValue;
 
 
@@ -50,24 +51,28 @@ class StackedBarChart {
     calculateMaxValue() {
         let h = this.data[0].total.length
         console.log(h)
-        let listValues = this.data.map(function(x) { return max(x.total) });
+        this.listValues = this.data.map(function(x) { return max(x.total) });
+        console.log("num",
+            this.listValues);
         // let listValues = this.data.map(function(x) { return max(x.total[h - 3]) + max(x.total[h - 2]) + max(x.total[h - 1]) });
-        this.maxValue = round(max(listValues));
         this.tickIncrements = this.maxValue / this.numTicks;
-        console.log(this.maxValue)
+        console.log("test", this.maxValue)
 
     }
 
     render() {
+        push();
         translate(this.posX, this.posY);
-        //chart
+
 
         this.drawTitle();
         this.drawSideTitle();
         this.drawAxis();
-        this.drawTickLines();
+        // this.drawTickLines();
         this.drawHorizontalLines();
         this.drawRects();
+        pop();
+
     }
 
     drawTitle() {
@@ -80,14 +85,16 @@ class StackedBarChart {
         push();
         textAlign(CENTER, CENTER);
         rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.spacing + this.margin) * 2);
+        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.barWidth - this.margin + (this.spacing * 2)) * 2);
         pop();
     };
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
-    scaledData(num) {
-        return map(num, 0, this.maxValue, 0, this.chartHeight);
+    scaledData(_num) {
+        let newValue = map(_num, 0, this.maxValue, 0, this.chartHeight);
+        return newValue;
     }
+
 
     drawTickLines() {
         for (let i = 0; i <= this.numTicks; i++) {
@@ -133,6 +140,7 @@ class StackedBarChart {
                 push();
                 fill(this.colors[colorNum]);
                 noStroke();
+                // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].values[j]));
                 rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].values[j]));
 
 
@@ -147,14 +155,14 @@ class StackedBarChart {
             push();
             for (let j = 0; j < this.data[i].values.length; j++) {
 
-                //bars
+
                 push();
                 if (this.showValues) {
                     noStroke();
                     fill(255);
                     textSize(16);
                     textAlign(CENTER, BOTTOM);
-                    text(this.data[i].values[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].values[j]));
+                    text(round((this.data[i].values[j]) / this.maxValue * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].values[j]) / 2);
                 }
                 pop();
                 translate(0, j - this.scaledData(this.data[i].values[j]));
