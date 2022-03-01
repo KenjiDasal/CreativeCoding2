@@ -1,4 +1,4 @@
-class VerticalBarChart {
+class PlotChart {
     constructor(_data) {
         //let listValues = data.map(function(x) { return x.cost });
 
@@ -33,12 +33,12 @@ class VerticalBarChart {
             color('#02ECE8')
         ];
 
-        this.showValues = true;
+        this.showValues = false;
         this.showLabels = true;
         this.rotateLabels = false;
 
-
-        this.calculateMaxValue();
+        this.calculateMaxXValue();
+        this.calculateMaxYValue();
         this.updateValue();
     }
 
@@ -48,24 +48,28 @@ class VerticalBarChart {
         this.barWidth = this.availableWidth / this.data.length; //bar widt
     }
 
-    calculateMaxValue() {
-        let listValues = this.data.map(function(x) { return x.cost })
-        this.maxValue = max(listValues);
-        this.tickIncrements = this.maxValue / this.numTicks;
+    calculateMaxYValue() {
+        let listYValues = this.data.map(function(y) { return y.gen })
+        this.maxYValue = max(listYValues);
+        this.tickIncrements = this.maxYValue / this.numTicks;
+    }
+
+    calculateMaxXValue() {
+        let listXValues = this.data.map(function(x) { return x.cost })
+        this.maxXValue = max(listXValues);
+        // this.tickIncrements = this.maxValue / this.numTicks;
     }
 
     render() {
-        push();
         translate(this.posX, this.posY);
-
+        //chart
 
         this.drawTitle();
         this.drawSideTitle();
         this.drawAxis();
-        // this.drawTickLines();
+        this.drawTickLines();
         this.drawHorizontalLines();
         this.drawRects();
-        pop();
     }
 
     drawTitle() {
@@ -75,9 +79,14 @@ class VerticalBarChart {
 
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
-    scaledData(num) {
-        return map(num, 0, this.maxValue, 0, this.chartHeight);
+    scaledXData(num) {
+        return map(num, 0, this.maxXValue + 10, 0, this.chartWidth);
     }
+    scaledYData(num) {
+        return map(num, 0, this.maxYValue + 10, 0, this.chartHeight);
+    }
+
+
 
     drawTickLines() {
         for (let i = 0; i <= this.numTicks; i++) {
@@ -101,6 +110,8 @@ class VerticalBarChart {
             line(0, this.tickSpacing * -i, this.chartWidth, this.tickSpacing * -i);
 
         }
+
+        line(0, 0, this.chartWidth, -this.chartHeight)
     }
 
     drawSideTitle() {
@@ -108,7 +119,7 @@ class VerticalBarChart {
         push();
         textAlign(CENTER, CENTER);
         rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 4, -(this.barWidth - this.margin + (this.spacing * 4)) * 4);
+        text(this.sideTitle, (this.barWidth + this.margin) * 4, -(this.barWidth - this.margin + (this.spacing * 4)) * 2);
         pop();
     };
 
@@ -127,7 +138,10 @@ class VerticalBarChart {
             //bars
             fill(this.colors[colorNum]);
             noStroke();
-            rect((this.barWidth + this.spacing) * i, 0, this.barWidth, this.scaledData(-this.data[i].cost));
+
+            ellipse(this.scaledXData(this.data[i].cost) - this.margin, this.scaledYData(-this.data[i].gen), 20, 20)
+
+            // ellipse(this.data[i].cost, this.data[i].);
 
             //numbers (text)
             if (this.showValues) {
@@ -135,32 +149,33 @@ class VerticalBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(this.data[i].cost, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaledData(-this.data[i].cost));
+                text(this.data[i].cost, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaledYData(-this.data[i].cost));
+                text(this.data[i].gen, this.scaledXData(-this.data[i].cost), ((this.barWidth + this.spacing) * i) + this.barWidth / 2);
             }
 
 
             //text
-            if (this.showLabels) {
-                if (this.rotateLabels) {
-                    push();
-                    noStroke();
-                    fill(255);
-                    textSize(14);
-                    textAlign(CENTER, BOTTOM);
-                    translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
-                    rotate(PI / 2);
-                    text(this.data[i].name, 0, 0);
-                    pop();
-                } else {
-                    push();
-                    noStroke();
-                    fill(255);
-                    textSize(14);
-                    textAlign(CENTER, BOTTOM);
-                    text(this.data[i].name, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20);
-                    pop();
-                }
-            }
+            // if (this.showLabels) {
+            //     if (this.rotateLabels) {
+            //         push();
+            //         noStroke();
+            //         fill(255);
+            //         textSize(14);
+            //         textAlign(CENTER, BOTTOM);
+            //         translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
+            //         rotate(PI / 2);
+            //         text(this.data[i].cost, 0, 0);
+            //         pop();
+            //     } else {
+            //         push();
+            //         noStroke();
+            //         fill(255);
+            //         textSize(14);
+            //         textAlign(CENTER, BOTTOM);
+            //         text((i * this.tickIncrements).toFixed(), -this.tickSpacing * -i - 25, 25);
+            //         pop();
+            //     }
+            // }
         }
         pop();
     }

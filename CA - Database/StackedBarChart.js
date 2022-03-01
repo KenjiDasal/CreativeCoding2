@@ -1,6 +1,6 @@
 class StackedBarChart {
     constructor(_data) {
-        //let listValues = data.map(function(x) { return x.gen });
+        //let listValues = data.map(function(x) { return x.consumption });
 
         this.data = _data;
         console.log(this.data)
@@ -8,8 +8,8 @@ class StackedBarChart {
         this.chartWidth = 300;
         this.chartHeight = 300;
 
-        this.title = "Genshin Impact Rerun Sales"
-        this.sideTitle = "Genshin Impact Sales(Millions)"
+        this.title = "Solar Energy Consumption"
+
 
         this.posX = 0;
         this.posY = 0;
@@ -29,7 +29,8 @@ class StackedBarChart {
             color('#242951'),
             color('#246390 '),
             color('#02A6EC'),
-            color('#02D3EC ')
+            color('#02D3EC'),
+            color('#02ECE8')
         ];
 
         this.showValues = true;
@@ -48,10 +49,9 @@ class StackedBarChart {
     }
 
     calculateMaxValue() {
-        let h = this.data[0].gen.length
-        console.log(h)
-        let listValues = this.data.map(function(x) { return max(x.gen) });
-        // let listValues = this.data.map(function(x) { return max(x.gen[h - 3]) + max(x.gen[h - 2]) + max(x.gen[h - 1]) });
+
+        let listValues = this.data.map(function(x) { return max(x.totalCon) });
+        // let listValues = this.data.map(function(x) { return max(x.consumption[h - 3]) + max(x.consumption[h - 2]) + max(x.consumption[h - 1]) });
         this.maxValue = round(max(listValues));
         this.tickIncrements = this.maxValue / this.numTicks;
         console.log(this.maxValue)
@@ -129,40 +129,40 @@ class StackedBarChart {
             fill(this.colors[colorNum]);
 
             push();
-            for (let j = 0; j < this.data[i].values.length; j++) {
-                let colorNum = j % 4;
+            for (let j = 0; j < this.data[i].consumptions.length; j++) {
+                let colorNum = j % 5;
                 //bars
                 push();
                 fill(this.colors[colorNum]);
                 noStroke();
-                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].values[j]));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].consumptions[j]));
 
 
                 pop();
-                translate(0, j - this.scaledData(this.data[i].values[j]));
+                translate(0, j - this.scaledData(this.data[i].consumptions[j]));
 
             }
             pop();
 
 
             //numbers (text)
-            push();
-            for (let j = 0; j < this.data[i].values.length; j++) {
+            // push();
+            // for (let j = 0; j < this.data[i].consumptions.length; j++) {
 
-                //bars
-                push();
-                if (this.showValues) {
-                    noStroke();
-                    fill(255);
-                    textSize(16);
-                    textAlign(CENTER, BOTTOM);
-                    text(this.data[i].values[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].values[j]));
-                }
-                pop();
-                translate(0, j - this.scaledData(this.data[i].values[j]));
+            //     //bars
+            //     push();
+            //     if (this.showValues) {
+            //         noStroke();
+            //         fill(255);
+            //         textSize(16);
+            //         textAlign(CENTER, BOTTOM);
+            //         text(this.data[i].consumptions[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].consumptions[j]) / 2);
+            //     }
+            //     pop();
+            //     translate(0, j - this.scaledData(this.data[i].consumptions[j]));
 
-            }
-            pop();
+            // }
+            // pop();
 
 
             //text

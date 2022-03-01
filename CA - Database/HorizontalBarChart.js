@@ -29,7 +29,8 @@ class HorizontalBarChart {
             color('#242951'),
             color('#246390 '),
             color('#02A6EC'),
-            color('#02D3EC ')
+            color('#02D3EC '),
+            color('#02ECE8')
         ];
 
         this.showValues = true;
@@ -54,6 +55,7 @@ class HorizontalBarChart {
     }
 
     render() {
+        push();
         translate(this.posX, this.posY);
         //chart
 
@@ -62,6 +64,7 @@ class HorizontalBarChart {
         this.drawTickLines();
         this.drawVerticalLines();
         this.drawRects();
+        pop();
     }
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
@@ -110,7 +113,7 @@ class HorizontalBarChart {
         translate(0, -(20 + this.margin));
         push();
         for (let i = 0; i < this.data.length; i++) {
-            let colorNum = i % 4;
+            let colorNum = i % 5;
 
             //bars
             fill(this.colors[colorNum]);
