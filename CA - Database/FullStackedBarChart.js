@@ -84,7 +84,7 @@ class FullStackedBarChart {
         push();
         textAlign(CENTER, CENTER);
         rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.barWidth - this.margin + (this.spacing)));
+        text("test", 0, 0);
         pop();
     };
 

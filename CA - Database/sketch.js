@@ -46,7 +46,7 @@ function setup() {
     thirdChart.chartWidth = 400;
     thirdChart.chartHeight = 500;
     thirdChart.posX = 100;
-    thirdChart.posY = 1100;
+    thirdChart.posY = 100;
     thirdChart.updateValue();
     thirdChart.rotateLabels = false;
 
