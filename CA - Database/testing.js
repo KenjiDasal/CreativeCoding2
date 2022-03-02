@@ -111,13 +111,14 @@ class StackedBarChart {
                 rect((this.barWidth + this.spacing) * i + j, -(this.data[i].total[j] + this.data[i].total[j]), this.barWidth, this.scaledData(-this.data[i].total[j]));
 
                 //numbers (text)
-                if (this.showValues) {
-                    noStroke();
-                    fill(255);
-                    textSize(16);
-                    textAlign(CENTER, BOTTOM);
-                    text(this.data[i].total[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].total[j]));
-                }
+
+                // if (this.showValues) {
+                //     noStroke();
+                //     fill(255);
+                //     textSize(16);
+                //     textAlign(CENTER, BOTTOM);
+                //     text(this.data[i].total[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].total[j]));
+                // }
 
 
                 //text

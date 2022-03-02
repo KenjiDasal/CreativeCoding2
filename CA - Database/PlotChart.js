@@ -21,19 +21,23 @@ class PlotChart {
         this.barWidth;
         this.availableWidth;
 
-        this.tickIncrements;
+        this.tickXIncrements;
+        this.tickYIncrements;
         this.maxValue;
 
 
         this.colors = [
-            color('#242951'),
-            color('#246390 '),
-            color('#02A6EC'),
-            color('#02D3EC '),
-            color('#02ECE8')
+            color('red'),
+            color('blue '),
+            color('green'),
+            color('yellow'),
+            color('purple'),
+            color('orange'),
+            color('cyan'),
+            color('white'),
         ];
 
-        this.showValues = false;
+        this.showValues = true;
         this.showLabels = true;
         this.rotateLabels = false;
 
@@ -51,13 +55,13 @@ class PlotChart {
     calculateMaxYValue() {
         let listYValues = this.data.map(function(y) { return y.gen })
         this.maxYValue = max(listYValues);
-        this.tickIncrements = this.maxYValue / this.numTicks;
+        this.tickYIncrements = this.maxYValue / this.numTicks;
     }
 
     calculateMaxXValue() {
         let listXValues = this.data.map(function(x) { return x.cost })
         this.maxXValue = max(listXValues);
-        // this.tickIncrements = this.maxValue / this.numTicks;
+        this.tickXIncrements = this.maxXValue / this.numTicks;
     }
 
     render() {
@@ -67,7 +71,8 @@ class PlotChart {
         this.drawTitle();
         this.drawSideTitle();
         this.drawAxis();
-        this.drawTickLines();
+        this.drawYTickLines();
+        this.drawXTickLines();
         this.drawHorizontalLines();
         this.drawRects();
     }
@@ -80,15 +85,15 @@ class PlotChart {
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
     scaledXData(num) {
-        return map(num, 0, this.maxXValue + 10, 0, this.chartWidth);
+        return map(num, 0, this.maxXValue + this.spacing, 0, this.chartWidth);
     }
     scaledYData(num) {
-        return map(num, 0, this.maxYValue + 10, 0, this.chartHeight);
+        return map(num, 0, this.maxYValue + this.spacing, 0, this.chartHeight);
     }
 
 
 
-    drawTickLines() {
+    drawYTickLines() {
         for (let i = 0; i <= this.numTicks; i++) {
             //ticks
             stroke(255);
@@ -97,9 +102,24 @@ class PlotChart {
             //numbers (text)
             fill(255, 200);
             noStroke();
-            textSize(14);
+            textSize(16);
             textAlign(RIGHT, CENTER);
-            text((i * this.tickIncrements).toFixed(), -15, this.tickSpacing * -i);
+            text((i * this.tickYIncrements).toFixed(), -15, this.tickSpacing * -i);
+        }
+    }
+
+    drawXTickLines() {
+        for (let i = 0; i <= this.numTicks; i++) {
+            //ticks
+            stroke(255);
+            line(0, this.tickSpacing * -i, -10, this.tickSpacing * -i);
+
+            //numbers (text)
+            fill(255, 200);
+            noStroke();
+            textSize(16);
+            textAlign(RIGHT, CENTER);
+            text((i * this.tickXIncrements).toFixed(), this.tickSpacing * i, 20);
         }
     }
 
@@ -133,15 +153,14 @@ class PlotChart {
         translate(this.margin, 0);
         push();
         for (let i = 0; i < this.data.length; i++) {
-            let colorNum = i % 5;
+            let colorNum = i % 8;
 
             //bars
             fill(this.colors[colorNum]);
             noStroke();
 
-            ellipse(this.scaledXData(this.data[i].cost) - this.margin, this.scaledYData(-this.data[i].gen), 20, 20)
+            ellipse(this.scaledXData(this.data[i].cost) - this.margin, this.scaledYData(-this.data[i].gen), 10, 10)
 
-            // ellipse(this.data[i].cost, this.data[i].);
 
             //numbers (text)
             if (this.showValues) {
@@ -149,8 +168,8 @@ class PlotChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(this.data[i].cost, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaledYData(-this.data[i].cost));
-                text(this.data[i].gen, this.scaledXData(-this.data[i].cost), ((this.barWidth + this.spacing) * i) + this.barWidth / 2);
+                text(this.data[i].name, this.scaledXData(this.data[i].cost) - this.margin, this.scaledYData(-this.data[i].gen - 10));
+
             }
 
 

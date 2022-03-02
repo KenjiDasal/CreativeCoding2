@@ -1,8 +1,9 @@
 class FullStackedBarChart {
-    constructor(_data) {
+    constructor(_data, _labels) {
         //let listValues = data.map(function(x) { return x.totalCon });
 
         this.data = _data;
+        this.labels = _labels;
         console.log(this.data)
 
         this.chartWidth = 300;
@@ -34,9 +35,10 @@ class FullStackedBarChart {
             color('#02ECE8')
         ];
 
-        this.showconsumptions = true;
+        this.showConsumptions = true;
         this.showLabels = true;
         this.rotateLabels = false;
+        this.showLegend = true;
 
 
         this.calculateMaxValue();
@@ -68,7 +70,7 @@ class FullStackedBarChart {
         this.drawSideTitle();
         this.drawAxis();
         // this.drawTickLines();
-        this.drawHorizontalLines();
+        // this.drawHorizontalLines();
         this.drawRects();
         pop();
 
@@ -76,21 +78,20 @@ class FullStackedBarChart {
 
     drawTitle() {
         textAlign(CENTER, CENTER);
-        text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
+        text(this.title, (this.chartWidth / 2), -(this.chartHeight + this.margin));
     };
 
     drawSideTitle() {
         angleMode(DEGREES)
         push();
         textAlign(CENTER, CENTER);
-        rotate(270);
-        text("test", 0, 0);
+        text("Countries", this.chartWidth / 2 - this.margin, this.margin + this.spacing);
         pop();
     };
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
     scaledData(_num) {
-        let newValue = map(_num, 0, this.maxValue, 0, this.chartHeight);
+        let newValue = map(_num, 0, this.chartHeight, 0, this.chartHeight);
         return newValue;
     }
 
@@ -128,22 +129,20 @@ class FullStackedBarChart {
         translate(this.margin, 0);
         push();
         for (let i = 0; i < this.data.length; i++) {
-            let colorNum = i % 1;
-            fill(this.colors[colorNum]);
 
             push();
-            for (let j = 0; j < this.data[i].consumptions.length; j++) {
+            for (let j = 0; j < 5; j++) {
                 let colorNum = j % 5;
                 //bars
                 push();
                 fill(this.colors[colorNum]);
                 noStroke();
                 // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].consumptions[j]));
-                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].consumptions[j]));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
 
 
                 pop();
-                translate(0, j - this.scaledData(this.data[i].consumptions[j]));
+                translate(0, j - (this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
 
             }
             pop();
@@ -155,18 +154,41 @@ class FullStackedBarChart {
 
 
                 push();
-                if (this.showconsumptions) {
+                if (this.showConsumptions) {
                     noStroke();
                     fill(255);
                     textSize(16);
                     textAlign(CENTER, BOTTOM);
-                    text(round((this.data[i].consumptions[j]) / this.maxValue * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].consumptions[j]) / 2);
+                    text(round((this.data[i].consumptions[j] / this.data[i].totalCon) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight / 2);
                 }
                 pop();
-                translate(0, j - this.scaledData(this.data[i].consumptions[j]));
+                translate(-1, j - (this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
 
             }
             pop();
+
+            //legend
+            push();
+            for (let j = 0; j < this.data[i].consumptions.length; j++) {
+                let colorNum = j % 5;
+
+                push();
+                fill(this.colors[colorNum]);
+                // if (this.showConsumptions) {
+                rect(this.chartWidth - 30, -this.chartHeight / 2, 20, 20)
+                noStroke();
+                fill(255);
+                textSize(16);
+                textAlign(CENTER, BOTTOM);
+                text(this.labels[0].year[j], this.chartWidth + 20, -this.chartHeight / 2 + 20);
+                // }
+                pop();
+                translate(0, j + 40);
+
+            }
+            pop();
+
+
 
 
             //text

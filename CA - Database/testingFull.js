@@ -1,6 +1,6 @@
-class VerticalBarChart {
+class TestingBarChart {
     constructor(_data) {
-        //let listValues = data.map(function(x) { return x.cost });
+        //let listValues = data.map(function(x) { return x.totalCon });
 
         this.data = _data;
         console.log(this.data)
@@ -8,13 +8,13 @@ class VerticalBarChart {
         this.chartWidth = 300;
         this.chartHeight = 300;
 
-        this.title = "Investment for Solar PV"
-        this.sideTitle = "investments (Billions)"
+        this.title = "Solar Consumption"
+        this.sideTitle = "Number of consumptions % (2016-20) "
 
         this.posX = 0;
         this.posY = 0;
 
-        this.spacing = 10;
+        this.spacing = 5;
         this.margin = 30;
         this.numTicks = 12;
         this.tickSpacing;
@@ -22,6 +22,7 @@ class VerticalBarChart {
         this.availableWidth;
 
         this.tickIncrements;
+        this.listValues;
         this.maxValue;
 
 
@@ -33,7 +34,7 @@ class VerticalBarChart {
             color('#02ECE8')
         ];
 
-        this.showValues = true;
+        this.showConsumptions = true;
         this.showLabels = true;
         this.rotateLabels = false;
 
@@ -49,9 +50,13 @@ class VerticalBarChart {
     }
 
     calculateMaxValue() {
-        let listValues = this.data.map(function(x) { return x.cost })
-        this.maxValue = max(listValues);
+        this.listValues = this.data.map(function(x) { return max(x.consumptions) });
+        console.log("num", this.listValues);
+        this.maxValue = max(this.listValues)
+            // let listValues = this.data.map(function(x) { return max(x.totalCon[h - 3]) + max(x.totalCon[h - 2]) + max(x.totalCon[h - 1]) });
         this.tickIncrements = this.maxValue / this.numTicks;
+        console.log("test", this.maxValue)
+
     }
 
     render() {
@@ -63,9 +68,10 @@ class VerticalBarChart {
         this.drawSideTitle();
         this.drawAxis();
         // this.drawTickLines();
-        this.drawHorizontalLines();
+        // this.drawHorizontalLines();
         this.drawRects();
         pop();
+
     }
 
     drawTitle() {
@@ -73,11 +79,21 @@ class VerticalBarChart {
         text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
     };
 
+    drawSideTitle() {
+        angleMode(DEGREES)
+        push();
+        textAlign(CENTER, CENTER);
+        rotate(270);
+        text("test", 0, 0);
+        pop();
+    };
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
-    scaledData(num) {
-        return map(num, 0, this.maxValue, 0, this.chartHeight);
+    scaledData(_num) {
+        let newValue = map(_num, 0, this.chartHeight, 0, this.chartHeight);
+        return newValue;
     }
+
 
     drawTickLines() {
         for (let i = 0; i <= this.numTicks; i++) {
@@ -97,21 +113,11 @@ class VerticalBarChart {
     drawHorizontalLines() {
         for (let i = 0; i <= this.numTicks; i++) {
             //horizontal line
-            stroke(255, 100);
+            stroke(255, 200);
             line(0, this.tickSpacing * -i, this.chartWidth, this.tickSpacing * -i);
 
         }
     }
-
-    drawSideTitle() {
-        angleMode(DEGREES)
-        push();
-        textAlign(CENTER, CENTER);
-        rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 4, -(this.barWidth - this.margin + (this.spacing * 4)));
-        pop();
-    };
-
 
     drawAxis() {
         line(0, 0, 0, -this.chartHeight); //y
@@ -122,21 +128,45 @@ class VerticalBarChart {
         translate(this.margin, 0);
         push();
         for (let i = 0; i < this.data.length; i++) {
-            let colorNum = i % 5;
-
-            //bars
+            let colorNum = i % 1;
             fill(this.colors[colorNum]);
-            noStroke();
-            rect((this.barWidth + this.spacing) * i, 0, this.barWidth, this.scaledData(-this.data[i].cost));
+
+            push();
+            for (let j = 0; j < 5; j++) {
+                let colorNum = j % 5;
+                //bars
+                push();
+                fill(this.colors[colorNum]);
+                noStroke();
+                // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].consumptions[j]));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
+
+
+                pop();
+                translate(0, j - (this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
+
+            }
+            pop();
+
 
             //numbers (text)
-            if (this.showValues) {
-                noStroke();
-                fill(255);
-                textSize(16);
-                textAlign(CENTER, BOTTOM);
-                text(this.data[i].cost, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaledData(-this.data[i].cost));
+            push();
+            for (let j = 0; j < this.data[i].consumptions.length; j++) {
+
+
+                push();
+                if (this.showConsumptions) {
+                    noStroke();
+                    fill(255);
+                    textSize(16);
+                    textAlign(CENTER, BOTTOM);
+                    text(round((this.data[i].consumptions[j]) / this.maxValue * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].consumptions[j]) / 2);
+                }
+                pop();
+                translate(0, j - (this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
+
             }
+            pop();
 
 
             //text
@@ -161,6 +191,7 @@ class VerticalBarChart {
                     pop();
                 }
             }
+
         }
         pop();
     }
