@@ -1,5 +1,5 @@
 class HorizontalBarChart {
-    constructor(_data) {
+    constructor(_data, _title) {
         //let listValues = data.map(function(x) { return x.gen });
 
         this.data = _data;
@@ -11,7 +11,7 @@ class HorizontalBarChart {
         this.posY = 10;
         this.textspacing = 20;
 
-        this.title = "Solar Generation"
+        this.title = _title
 
 
         this.spacing = 5;
@@ -49,8 +49,8 @@ class HorizontalBarChart {
     }
 
     calculateMaxValue() {
-        let listValues = this.data.map(function(x) { return x.gen })
-        this.maxValue = round(max(listValues));
+        let listValues = this.data.map(function(x) { return x.Consumption })
+        this.maxValue = round(max(listValues)).toFixed();
         this.tickIncrements = this.maxValue / this.numTicks;
     }
 
@@ -118,7 +118,7 @@ class HorizontalBarChart {
             //bars
             fill(this.colors[colorNum]);
             noStroke();
-            rect(0, -(this.barWidth + this.spacing) * i, -this.scaledData(-this.data[i].gen), this.barWidth);
+            rect(0, -(this.barWidth + this.spacing) * i, -this.scaledData(-this.data[i].Consumption), this.barWidth);
 
             //numbers (text)
             if (this.showValues) {
@@ -126,7 +126,7 @@ class HorizontalBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(this.data[i].gen, -this.scaledData(-this.data[i].gen) + this.textspacing, -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
+                text(this.data[i].Consumption, -this.scaledData(-this.data[i].Consumption) + this.textspacing, -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
             }
 
 
@@ -141,7 +141,7 @@ class HorizontalBarChart {
                     // translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
                     translate(-(this.margin), this.barWidth / 2, 20)
                     rotate(PI / 2);
-                    text(this.data[i].name, -((this.barWidth + this.spacing) * i), 0);
+                    text(this.data[i].Code, -((this.barWidth + this.spacing) * i), 0);
                     pop();
                 } else {
                     push();
@@ -150,7 +150,7 @@ class HorizontalBarChart {
                     textSize(14);
                     textAlign(CENTER, BOTTOM);
                     // text(this.data[i].name, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, (this.margin * 3));
-                    text(this.data[i].name, -(this.margin), -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
+                    text(this.data[i].Code, -(this.margin), -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
 
                     pop();
                 }

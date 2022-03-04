@@ -1,4 +1,4 @@
-let data = [
+let dataTest = [
     //{name: 'WORLD', gen: 'NUMBER', cost: '(Billion)USD', share: 'PERCENT'}
     // {
     //     name: "World",
@@ -8,7 +8,15 @@ let data = [
     //     totalCon: 2894.197,
     //     consumptions: [329.564, 443.315, 572.908, 704.024, 844.386]
     // },
-    { name: "testing", gen: 220.10, cost: 30, Share: 3.42, totalCon: 500, consumptions: [100, 200, 25, 75, 100], wealth: 170000 },
+    {
+        name: "testing",
+        gen: 220.10,
+        cost: 30,
+        Share: 3.42,
+        totalCon: 57,
+        consumptions: [6, 8, 10, 14, 19],
+        wealth: 170000
+    },
     { name: "CHN", gen: 261.10, cost: 25.08, Share: 3.42, totalCon: 845.7, consumptions: [66.5, 116.6, 177.5, 224, 261.1], wealth: 170000 },
     { name: "USA", gen: 132.63, cost: 17.6, Share: 3.27, totalCon: 465.031, consumptions: [54.866, 77.276, 93.365, 106.894, 132.63], wealth: 180000 },
     { name: "JAP", gen: 84.45, cost: 8.3, Share: 8.79, totalCon: 322.471, consumptions: [45.761, 55.069, 62.668, 74.522, 84.451], wealth: 5390 },
@@ -29,37 +37,40 @@ let labels = [
 
 function setup() {
     createCanvas(1800, 1800);
+    generateData()
     background(127);
 
     firstChart = new HorizontalBarChart(data);
-    firstChart.chartWidth = 300;
-    firstChart.chartHeight = 300;
+    firstChart.chartWidth = 400;
+    firstChart.chartHeight = 400;
     firstChart.posX = 100;
-    firstChart.posY = 400;
+    firstChart.posY = 700;
     firstChart.updateValue();
     firstChart.rotateLabels = false;
 
     secondChart = new VerticalBarChart(data);
-    secondChart.chartWidth = 300;
-    secondChart.chartHeight = 300;
+    secondChart.chartWidth = 700;
+    secondChart.chartHeight = 500;
     secondChart.posX = 600;
-    secondChart.posY = 400;
+    secondChart.posY = 700;
     secondChart.updateValue();
     secondChart.rotateLabels = false;
 
     thirdChart = new FullStackedBarChart(data, labels);
-    thirdChart.chartWidth = 400;
+    thirdChart.chartWidth = 700;
     thirdChart.chartHeight = 500;
-    thirdChart.posX = 50;
-    thirdChart.posY = 1100;
+    thirdChart.posX = 100;
+    thirdChart.posY = 1400;
     thirdChart.updateValue();
     thirdChart.rotateLabels = false;
 
+
+
     fourthChart = new PlotChart(data);
-    fourthChart.chartWidth = 400;
+    fourthChart.chartWidth = 500;
     fourthChart.chartHeight = 500;
-    fourthChart.posX = 600;
-    fourthChart.posY = 1100;
+    fourthChart.posX = 1400;
+    fourthChart.posY = 700;
     fourthChart.updateValue();
     fourthChart.rotateLabels = false;
 
@@ -69,7 +80,7 @@ function setup() {
 
 function draw() {
     background(127);
-    scale(1)
+    scale(0.5)
 
 
     firstChart.updateValue();
@@ -80,7 +91,6 @@ function draw() {
 
     thirdChart.updateValue();
     thirdChart.render();
-
 
     fourthChart.updateValue();
     fourthChart.render();

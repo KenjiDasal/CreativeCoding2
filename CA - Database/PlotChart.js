@@ -1,5 +1,5 @@
 class PlotChart {
-    constructor(_data) {
+    constructor(_data, _title, _sideTitle, _bottomTitle) {
         //let listValues = data.map(function(x) { return x.cost });
 
         this.data = _data;
@@ -53,13 +53,13 @@ class PlotChart {
     }
 
     calculateMaxYValue() {
-        let listYValues = this.data.map(function(y) { return y.gen })
+        let listYValues = this.data.map(function(y) { return y.Cost })
         this.maxYValue = max(listYValues);
         this.tickYIncrements = this.maxYValue / this.numTicks;
     }
 
     calculateMaxXValue() {
-        let listXValues = this.data.map(function(x) { return x.cost })
+        let listXValues = this.data.map(function(x) { return x.Consumption })
         this.maxXValue = max(listXValues);
         this.tickXIncrements = this.maxXValue / this.numTicks;
     }
@@ -159,16 +159,16 @@ class PlotChart {
             fill(this.colors[colorNum]);
             noStroke();
 
-            ellipse(this.scaledXData(this.data[i].cost) - this.margin, this.scaledYData(-this.data[i].gen), 10, 10)
+            ellipse(this.scaledXData(this.data[i].Consumption) - this.margin, this.scaledYData(-this.data[i].Cost), this.data[i].total / 5, this.data[i].total / 5)
 
 
             //numbers (text)
             if (this.showValues) {
                 noStroke();
-                fill(255);
+                fill(0);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(this.data[i].name, this.scaledXData(this.data[i].cost) - this.margin, this.scaledYData(-this.data[i].gen - 10));
+                text(this.data[i].Code, this.scaledXData(this.data[i].Consumption) - this.margin, this.scaledYData(-this.data[i].Cost));
 
             }
 

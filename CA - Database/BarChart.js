@@ -1,12 +1,14 @@
 class VerticalBarChart {
-    constructor(_data) {
-        //let listValues = data.map(function(x) { return x.cost });
+    constructor(_data, _title) {
+        //let listValues = data.map(function(x) { return x.Cost });
 
         this.data = _data;
         console.log(this.data)
+        this.title = _title;
 
-        this.chartWidth = 300;
-        this.chartHeight = 300;
+
+        this.chartWidth;
+        this.chartHeight;
 
         this.title = "Investment for Solar PV"
         this.sideTitle = "investments (Billions)"
@@ -49,7 +51,7 @@ class VerticalBarChart {
     }
 
     calculateMaxValue() {
-        let listValues = this.data.map(function(x) { return x.cost })
+        let listValues = this.data.map(function(x) { return x.Cost })
         this.maxValue = max(listValues);
         this.tickIncrements = this.maxValue / this.numTicks;
     }
@@ -62,7 +64,7 @@ class VerticalBarChart {
         this.drawTitle();
         this.drawSideTitle();
         this.drawAxis();
-        // this.drawTickLines();
+        this.drawTickLines();
         this.drawHorizontalLines();
         this.drawRects();
         pop();
@@ -127,7 +129,7 @@ class VerticalBarChart {
             //bars
             fill(this.colors[colorNum]);
             noStroke();
-            rect((this.barWidth + this.spacing) * i, 0, this.barWidth, this.scaledData(-this.data[i].cost));
+            rect((this.barWidth + this.spacing) * i, 0, this.barWidth, this.scaledData(-this.data[i].Cost));
 
             //numbers (text)
             if (this.showValues) {
@@ -135,7 +137,7 @@ class VerticalBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(this.data[i].cost, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaledData(-this.data[i].cost));
+                text(this.data[i].Cost, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaledData(-this.data[i].Cost));
             }
 
 
@@ -149,7 +151,7 @@ class VerticalBarChart {
                     textAlign(CENTER, BOTTOM);
                     translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
                     rotate(PI / 2);
-                    text(this.data[i].name, 0, 0);
+                    text(this.data[i].Code, 0, 0);
                     pop();
                 } else {
                     push();
@@ -157,7 +159,7 @@ class VerticalBarChart {
                     fill(255);
                     textSize(14);
                     textAlign(CENTER, BOTTOM);
-                    text(this.data[i].name, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20);
+                    text(this.data[i].Code, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20);
                     pop();
                 }
             }

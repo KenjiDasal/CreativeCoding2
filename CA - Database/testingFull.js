@@ -1,6 +1,6 @@
-class TestingBarChart {
+class fullStackedBarChart {
     constructor(_data) {
-        //let listValues = data.map(function(x) { return x.totalCon });
+        //let listValues = data.map(function(x) { return x.total });
 
         this.data = _data;
         console.log(this.data)
@@ -37,6 +37,7 @@ class TestingBarChart {
         this.showConsumptions = true;
         this.showLabels = true;
         this.rotateLabels = false;
+        this.showLegend = true;
 
 
         this.calculateMaxValue();
@@ -50,10 +51,10 @@ class TestingBarChart {
     }
 
     calculateMaxValue() {
-        this.listValues = this.data.map(function(x) { return max(x.consumptions) });
+        this.listValues = this.data.map(function(x) { return max(x.total) });
         console.log("num", this.listValues);
         this.maxValue = max(this.listValues)
-            // let listValues = this.data.map(function(x) { return max(x.totalCon[h - 3]) + max(x.totalCon[h - 2]) + max(x.totalCon[h - 1]) });
+            // let listValues = this.data.map(function(x) { return max(x.total[h - 3]) + max(x.total[h - 2]) + max(x.total[h - 1]) });
         this.tickIncrements = this.maxValue / this.numTicks;
         console.log("test", this.maxValue)
 
@@ -63,7 +64,7 @@ class TestingBarChart {
         push();
         translate(this.posX, this.posY);
 
-
+        console.log("test")
         this.drawTitle();
         this.drawSideTitle();
         this.drawAxis();
@@ -76,15 +77,14 @@ class TestingBarChart {
 
     drawTitle() {
         textAlign(CENTER, CENTER);
-        text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
+        text(this.title, (this.chartWidth / 2), -(this.chartHeight + this.margin));
     };
 
     drawSideTitle() {
         angleMode(DEGREES)
         push();
         textAlign(CENTER, CENTER);
-        rotate(270);
-        text("test", 0, 0);
+        text("Countries", this.chartWidth / 2 - this.margin, this.margin + this.spacing);
         pop();
     };
 
@@ -127,46 +127,136 @@ class TestingBarChart {
     drawRects() {
         translate(this.margin, 0);
         push();
-        for (let i = 0; i < this.data.length; i++) {
-            let colorNum = i % 1;
-            fill(this.colors[colorNum]);
+        for (let i = 0; i < 1; i++) {
 
             push();
-            for (let j = 0; j < 5; j++) {
-                let colorNum = j % 5;
+            for (let j = 0; j < 1; j++) {
+                let colorNum = i % 1;
                 //bars
                 push();
                 fill(this.colors[colorNum]);
                 noStroke();
-                // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].consumptions[j]));
-                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
+                // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[1].gen));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[1].first / this.data[1].total) * this.chartHeight);
+
+                noStroke();
+                fill(255);
+                textSize(16);
+                textAlign(CENTER, BOTTOM);
+                text((this.data[1].first / this.data[1].total) * 100, ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[1].first / this.data[1].total) * this.chartHeight / 2);
+
+                pop();
+                translate(0, j - (this.data[1].first / this.data[1].total) * this.chartHeight);
+
+                //bars
+                push();
+                fill(this.colors[colorNum]);
+                noStroke();
+                // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[1].gen));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[1].second / this.data[1].total) * this.chartHeight);
+
+                noStroke();
+                fill(255);
+                textSize(16);
+                textAlign(CENTER, BOTTOM);
+                text((this.data[1].second / this.data[1].total) * 100, ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[1].second / this.data[1].total) * this.chartHeight / 2);
+
+                pop();
+                translate(0, j - (this.data[1].second / this.data[1].total) * this.chartHeight);
+
+                //bars
+                push();
+                fill(this.colors[colorNum]);
+                noStroke();
+                // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[1].gen));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[1].third / this.data[1].total) * this.chartHeight);
+
+                noStroke();
+                fill(255);
+                textSize(16);
+                textAlign(CENTER, BOTTOM);
+                text((this.data[1].third / this.data[1].total) * 100, ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[1].third / this.data[1].total) * this.chartHeight / 2);
 
 
                 pop();
-                translate(0, j - (this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
+                translate(0, j - (this.data[1].third / this.data[1].total) * this.chartHeight);
+
+                //bars
+                push();
+                fill(this.colors[colorNum]);
+                noStroke();
+                // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[1].gen));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[1].fourth / this.data[1].total) * this.chartHeight);
+
+                noStroke();
+                fill(255);
+                textSize(16);
+                textAlign(CENTER, BOTTOM);
+                text((this.data[1].fourth / this.data[1].total) * 100, ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[1].fourth / this.data[1].total) * this.chartHeight / 2);
+
+                pop();
+                translate(0, j - (this.data[1].fourth / this.data[1].total) * this.chartHeight);
+
+                //bars
+                push();
+                fill(this.colors[colorNum]);
+                noStroke();
+                // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[1].gen));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[1].fifth / this.data[1].total) * this.chartHeight);
+
+                noStroke();
+                fill(255);
+                textSize(16);
+                textAlign(CENTER, BOTTOM);
+                text((this.data[1].fifth / this.data[1].total) * 100, ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[1].fifth / this.data[1].total) * this.chartHeight / 2);
+
+                pop();
+                translate(0, j - (this.data[1].fifth / this.data[1].total) * this.chartHeight);
 
             }
             pop();
 
 
             //numbers (text)
-            push();
-            for (let j = 0; j < this.data[i].consumptions.length; j++) {
+            // push();
+            // for (let j = 0; j < this.data[1].total.length; j++) {
+
+            //     push();
+            //     if (this.showConsumptions) {
+            //         noStroke();
+            //         fill(255);
+            //         textSize(16);
+            //         textAlign(CENTER, BOTTOM);
+            //         text((this.data[1].gen / this.data[1].total) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[1].gen / this.data[1].total) * this.chartHeight / 2);
+            //     }
+            //     pop();
+            //     translate(-1, j - (this.data[1].gen / this.data[1].total) * this.chartHeight);
+
+            // }
+            // pop();
+
+            //legend
+            // push();
+            // for (let j = 0; j < this.data[1].total.length; j++) {
+            //     let colorNum = j % 5;
+
+            //     push();
+            //     fill(this.colors[colorNum]);
+            //     // if (this.showConsumptions) {
+            //     rect(this.chartWidth - 30, -this.chartHeight / 2, 20, 20)
+            //     noStroke();
+            //     fill(255);
+            //     textSize(16);
+            //     textAlign(CENTER, BOTTOM);
+            //     text(this.labels[0].year[j], this.chartWidth + 20, -this.chartHeight / 2 + 20);
+            //     // }
+            //     pop();
+            //     translate(0, j + 40);
+
+            // }
+            // pop();
 
 
-                push();
-                if (this.showConsumptions) {
-                    noStroke();
-                    fill(255);
-                    textSize(16);
-                    textAlign(CENTER, BOTTOM);
-                    text(round((this.data[i].consumptions[j]) / this.maxValue * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].consumptions[j]) / 2);
-                }
-                pop();
-                translate(0, j - (this.data[i].consumptions[j] / this.data[i].totalCon) * this.chartHeight);
-
-            }
-            pop();
 
 
             //text
@@ -179,7 +269,7 @@ class TestingBarChart {
                     textAlign(CENTER, BOTTOM);
                     translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
                     rotate(PI / 2);
-                    text(this.data[i].name, 0, 0);
+                    text(this.data[1].name, 0, 0);
                     pop();
                 } else {
                     push();
@@ -187,7 +277,7 @@ class TestingBarChart {
                     fill(255);
                     textSize(14);
                     textAlign(CENTER, BOTTOM);
-                    text(this.data[i].name, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20);
+                    text(this.data[1].name, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20);
                     pop();
                 }
             }
