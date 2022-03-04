@@ -8,7 +8,7 @@ class PlotChart {
         this.chartWidth = 300;
         this.chartHeight = 300;
 
-        this.title = "Investment for Solar PV"
+        this.title = "Investment VS Consumption"
         this.sideTitle = "investments (Billions)"
 
         this.posX = 0;
@@ -139,8 +139,9 @@ class PlotChart {
         push();
         textAlign(CENTER, CENTER);
         rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 4, -(this.barWidth - this.margin + (this.spacing * 4)) * 2);
+        text(this.sideTitle, (this.chartHeight / 2 - this.margin), -(this.barWidth - this.margin + (this.spacing + this.margin) * 2));
         pop();
+        text("Consumptions", this.chartWidth / 2 - this.margin, (this.margin + this.spacing) * 2);
     };
 
 

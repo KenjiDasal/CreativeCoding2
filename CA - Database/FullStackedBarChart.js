@@ -83,6 +83,10 @@ class FullStackedBarChart {
     drawSideTitle() {
         angleMode(DEGREES)
         push();
+        rotate(270)
+        text("% of Energy Generation", (this.chartHeight / 2) - this.margin, -this.margin - (this.spacing * 2));
+        pop();
+        push();
         textAlign(CENTER, CENTER);
         text("Countries", this.chartWidth / 2 - this.margin, this.margin + this.spacing);
         pop();
@@ -145,7 +149,7 @@ class FullStackedBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(round((this.data[i].first / this.data[i].total) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].first / this.data[i].total) * this.chartHeight / 2);
+                text(round((this.data[i].first)), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].first / this.data[i].total) * this.chartHeight / 2);
 
                 pop();
                 translate(0, j - (this.data[i].first / this.data[i].total) * this.chartHeight);
@@ -162,7 +166,7 @@ class FullStackedBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(round((this.data[i].second / this.data[i].total) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].second / this.data[i].total) * this.chartHeight / 2);
+                text(round((this.data[i].second)), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].second / this.data[i].total) * this.chartHeight / 2);
 
                 pop();
                 translate(0, j - (this.data[i].second / this.data[i].total) * this.chartHeight);
@@ -179,7 +183,7 @@ class FullStackedBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(round((this.data[i].third / this.data[i].total) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].third / this.data[i].total) * this.chartHeight / 2);
+                text(round((this.data[i].third)), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].third / this.data[i].total) * this.chartHeight / 2);
 
 
                 pop();
@@ -197,7 +201,7 @@ class FullStackedBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(round((this.data[i].fourth / this.data[i].total) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].fourth / this.data[i].total) * this.chartHeight / 2);
+                text(round((this.data[i].fourth)), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].fourth / this.data[i].total) * this.chartHeight / 2);
 
                 pop();
                 translate(0, j - (this.data[i].fourth / this.data[i].total) * this.chartHeight);
@@ -214,7 +218,7 @@ class FullStackedBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(round((this.data[i].fifth / this.data[i].total) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].fifth / this.data[i].total) * this.chartHeight / 2);
+                text(round((this.data[i].fifth)), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].fifth / this.data[i].total) * this.chartHeight / 2);
 
                 pop();
 
@@ -232,7 +236,7 @@ class FullStackedBarChart {
             //         fill(255);
             //         textSize(16);
             //         textAlign(CENTER, BOTTOM);
-            //         text((this.data[i].gen / this.data[i].total) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].gen / this.data[i].total) * this.chartHeight / 2);
+            //         text((this.data[i].gen )), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].gen / this.data[i].total) * this.chartHeight / 2);
             //     }
             //     pop();
             //     translate(-1, j - (this.data[i].gen / this.data[i].total) * this.chartHeight);
