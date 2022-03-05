@@ -8,8 +8,9 @@ class FullStackedBarChart {
         this.chartWidth = 300;
         this.chartHeight = 300;
 
-        this.title = "Solar Consumption"
-        this.sideTitle = "Number of values % (2016-20) "
+        this.title = "Character Sales Per Banner"
+        this.sideTitle = ""
+
 
         this.posX = 0;
         this.posY = 0;
@@ -84,7 +85,7 @@ class FullStackedBarChart {
         angleMode(DEGREES)
         push();
         textAlign(CENTER, CENTER);
-        text("Countries", this.chartWidth / 2 - this.margin, this.margin + this.spacing);
+        text("Characters", this.chartWidth / 2 - this.margin, this.margin + this.spacing);
         pop();
     };
 
