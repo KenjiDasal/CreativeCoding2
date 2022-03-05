@@ -1,30 +1,31 @@
 class VerticalBarChart {
-    constructor(_data, _title) {
-        //let listValues = data.map(function(x) { return x.Cost });
+    constructor(_data, _title, _sideTitle, _chartW, _chartH, _posX, _posY, _spacing, _margin, _showV, _listV, _rotateV) {
+        //let listValues = data.map(function(x) { return x.gen });
 
         this.data = _data;
-        console.log(this.data)
-        this.title = _title;
+        this.chartWidth = _chartW;
+        this.chartHeight = _chartH;
+        this.posX = _posX;
+        this.posY = _posY;
+        this.title = _title
+        this.sideTitle = _sideTitle;
+        this.spacing = _spacing;
+        this.margin = _margin;
 
+        this.numTicks = 10;
 
-        this.chartWidth;
-        this.chartHeight;
-
-        this.title = "Investment for Solar PV"
-        this.sideTitle = "investments (Billions)"
-
-        this.posX = 0;
-        this.posY = 0;
-
-        this.spacing = 10;
-        this.margin = 30;
-        this.numTicks = 12;
         this.tickSpacing;
         this.barWidth;
         this.availableWidth;
-
         this.tickIncrements;
         this.maxValue;
+
+
+
+
+        this.showValues = _showV;
+        this.showLabels = _listV;
+        this.rotateLabels = _rotateV;
 
 
         this.colors = [
@@ -34,11 +35,6 @@ class VerticalBarChart {
             color('#02D3EC '),
             color('#02ECE8')
         ];
-
-        this.showValues = true;
-        this.showLabels = true;
-        this.rotateLabels = false;
-
 
         this.calculateMaxValue();
         this.updateValue();

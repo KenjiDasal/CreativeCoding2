@@ -1,22 +1,4 @@
 let dataTest = [
-    //{name: 'WORLD', gen: 'NUMBER', cost: '(Billion)USD', share: 'PERCENT'}
-    // {
-    //     name: "World",
-    //     gen: 844.39,
-    //     cost: 820,
-    //     Share: 3.27,
-    //     totalCon: 2894.197,
-    //     consumptions: [329.564, 443.315, 572.908, 704.024, 844.386]
-    // },
-    {
-        name: "testing",
-        gen: 220.10,
-        cost: 30,
-        Share: 3.42,
-        totalCon: 57,
-        consumptions: [6, 8, 10, 14, 19],
-        wealth: 170000
-    },
     { name: "CHN", gen: 261.10, cost: 25.08, Share: 3.42, totalCon: 845.7, consumptions: [66.5, 116.6, 177.5, 224, 261.1], wealth: 170000 },
     { name: "USA", gen: 132.63, cost: 17.6, Share: 3.27, totalCon: 465.031, consumptions: [54.866, 77.276, 93.365, 106.894, 132.63], wealth: 180000 },
     { name: "JAP", gen: 84.45, cost: 8.3, Share: 8.79, totalCon: 322.471, consumptions: [45.761, 55.069, 62.668, 74.522, 84.451], wealth: 5390 },
@@ -36,43 +18,23 @@ let labels = [
 
 
 function setup() {
-    createCanvas(1800, 1800);
+    createCanvas(1500, 1000);
     generateData()
     background(127);
 
-    firstChart = new HorizontalBarChart(data);
-    firstChart.chartWidth = 400;
-    firstChart.chartHeight = 400;
-    firstChart.posX = 100;
-    firstChart.posY = 700;
+    //(_data, _label, _title, _sideTitle, _chartW, _chartH, _posX, _posY, _spacin, _margin, _color, _showV, _listV, _rotateV, _showL)
+
+    firstChart = new HorizontalBarChart(data, "Total Consumption", "Consumption (TWh)", 400, 400, 100, 700, 5, 30, true, true, false);
     firstChart.updateValue();
-    firstChart.rotateLabels = false;
 
-    secondChart = new VerticalBarChart(data);
-    secondChart.chartWidth = 700;
-    secondChart.chartHeight = 500;
-    secondChart.posX = 600;
-    secondChart.posY = 700;
+    secondChart = new VerticalBarChart(data, "Total Investment", "Investment (Billion)", 700, 500, 600, 700, 10, 30, true, true, false);
     secondChart.updateValue();
-    secondChart.rotateLabels = false;
 
-    thirdChart = new FullStackedBarChart(data, labels);
-    thirdChart.chartWidth = 700;
-    thirdChart.chartHeight = 500;
-    thirdChart.posX = 100;
-    thirdChart.posY = 1400;
+    thirdChart = new FullStackedBarChart(data, labels, "Generation per TWh (2015-2020)", "% of Energy Generation", "Countries", 700, 500, 100, 1400, 5, 30, true, true, false, true);
     thirdChart.updateValue();
-    thirdChart.rotateLabels = false;
 
-
-
-    fourthChart = new PlotChart(data);
-    fourthChart.chartWidth = 500;
-    fourthChart.chartHeight = 500;
-    fourthChart.posX = 1400;
-    fourthChart.posY = 700;
+    fourthChart = new PlotChart(data, "Investment VS Consumption", "Investment (Billions)", "Consumption (TWh)", 500, 500, 1400, 700, 5, 30, true, true, false);
     fourthChart.updateValue();
-    fourthChart.rotateLabels = false;
 
 }
 
@@ -80,9 +42,7 @@ function setup() {
 
 function draw() {
     background(127);
-    scale(0.5)
-
-
+    scale(.68)
     firstChart.updateValue();
     firstChart.render();
 

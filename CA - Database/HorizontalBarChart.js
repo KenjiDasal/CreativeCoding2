@@ -1,21 +1,17 @@
 class HorizontalBarChart {
-    constructor(_data, _title) {
+    constructor(_data, _title, _sideTitle, _chartW, _chartH, _posX, _posY, _spacing, _margin, _showV, _listV, _rotateV) {
         //let listValues = data.map(function(x) { return x.gen });
 
         this.data = _data;
-
-        this.chartWidth = 500;
-        this.chartHeight = 500;
-
-        this.posX = 10;
-        this.posY = 10;
-        this.textspacing = 20;
-
+        this.chartWidth = _chartW;
+        this.chartHeight = _chartH;
+        this.posX = _posX;
+        this.posY = _posY;
         this.title = _title
+        this.sideTitle = _sideTitle;
+        this.spacing = _spacing;
+        this.margin = _margin;
 
-
-        this.spacing = 5;
-        this.margin = 30;
         this.numTicks = 10;
 
         this.tickSpacing;
@@ -25,6 +21,12 @@ class HorizontalBarChart {
         this.maxValue;
 
 
+
+
+        this.showValues = _showV;
+        this.showLabels = _listV;
+        this.rotateLabels = _rotateV;
+
         this.colors = [
             color('#242951'),
             color('#246390 '),
@@ -32,12 +34,6 @@ class HorizontalBarChart {
             color('#02D3EC '),
             color('#02ECE8')
         ];
-
-        this.showValues = true;
-        this.showLabels = true;
-        this.rotateLabels = false;
-
-
         this.calculateMaxValue();
         this.updateValue();
     }
@@ -60,6 +56,7 @@ class HorizontalBarChart {
         //chart
 
         this.drawTitle();
+        this.drawSideTitle();
         this.drawAxis();
         this.drawTickLines();
         this.drawVerticalLines();
@@ -75,6 +72,14 @@ class HorizontalBarChart {
     drawTitle() {
         textAlign(CENTER, CENTER);
         text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
+    };
+
+    drawSideTitle() {
+        angleMode(DEGREES)
+        push();
+        textAlign(CENTER, CENTER);
+        text(this.sideTitle, this.chartWidth / 2 - this.margin, this.margin + this.spacing);
+        pop();
     };
 
     drawTickLines() {
@@ -126,7 +131,8 @@ class HorizontalBarChart {
                 fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
-                text(this.data[i].Consumption, -this.scaledData(-this.data[i].Consumption) + this.textspacing, -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
+                // text(this.data[i].Consumption, this.scaledData(-this.data[i].Consumption) + this.textspacing, -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
+                text(this.data[i].Consumption, this.scaledData(this.data[i].Consumption) / 2, -((this.barWidth + this.spacing) * i) + this.barWidth / 2 + 10);
             }
 
 

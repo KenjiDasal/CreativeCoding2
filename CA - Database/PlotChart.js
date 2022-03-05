@@ -1,40 +1,40 @@
 class PlotChart {
-    constructor(_data, _title, _sideTitle, _bottomTitle) {
-        //let listValues = data.map(function(x) { return x.cost });
+    constructor(_data, _title, _sideTitle, _bottomTitle, _chartW, _chartH, _posX, _posY, _spacing, _margin, _showV, _listV, _rotateV) {
+        //let listValues = data.map(function(x) { return x.gen });
 
         this.data = _data;
-        console.log(this.data)
+        this.chartWidth = _chartW;
+        this.chartHeight = _chartH;
+        this.posX = _posX;
+        this.posY = _posY;
+        this.title = _title
+        this.sideTitle = _sideTitle;
+        this.bottomTitle = _bottomTitle;
+        this.spacing = _spacing;
+        this.margin = _margin;
 
-        this.chartWidth = 300;
-        this.chartHeight = 300;
+        this.numTicks = 10;
 
-        this.title = "Investment VS Consumption"
-        this.sideTitle = "investments (Billions)"
-
-        this.posX = 0;
-        this.posY = 0;
-
-        this.spacing = 5;
-        this.margin = 30;
-        this.numTicks = 12;
         this.tickSpacing;
         this.barWidth;
         this.availableWidth;
-
-        this.tickXIncrements;
-        this.tickYIncrements;
+        this.tickIncrements;
         this.maxValue;
 
 
+
+
+        this.showValues = _showV;
+        this.showLabels = _listV;
+        this.rotateLabels = _rotateV;
+
+
         this.colors = [
-            color('red'),
-            color('blue '),
-            color('green'),
-            color('yellow'),
-            color('purple'),
-            color('orange'),
-            color('cyan'),
-            color('white'),
+            color('#242951'),
+            color('#246390 '),
+            color('#02A6EC'),
+            color('#02D3EC '),
+            color('#02ECE8')
         ];
 
         this.showValues = true;
@@ -141,7 +141,7 @@ class PlotChart {
         rotate(270);
         text(this.sideTitle, (this.chartHeight / 2 - this.margin), -(this.barWidth - this.margin + (this.spacing + this.margin) * 2));
         pop();
-        text("Consumptions", this.chartWidth / 2 - this.margin, (this.margin + this.spacing) * 2);
+        text(this.bottomTitle, this.chartWidth / 2 - this.margin, (this.margin + this.spacing) * 2);
     };
 
 
@@ -154,7 +154,8 @@ class PlotChart {
         translate(this.margin, 0);
         push();
         for (let i = 0; i < this.data.length; i++) {
-            let colorNum = i % 8;
+
+            let colorNum = i % 5;
 
             //bars
             fill(this.colors[colorNum]);
@@ -166,7 +167,7 @@ class PlotChart {
             //numbers (text)
             if (this.showValues) {
                 noStroke();
-                fill(0);
+                fill(255);
                 textSize(16);
                 textAlign(CENTER, BOTTOM);
                 text(this.data[i].Code, this.scaledXData(this.data[i].Consumption) - this.margin, this.scaledYData(-this.data[i].Cost));

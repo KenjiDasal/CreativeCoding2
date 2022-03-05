@@ -1,30 +1,35 @@
 class FullStackedBarChart {
-    constructor(_data, _label, _title, _sideTitle, ) {
+    constructor(_data, _label, _title, _sideTitle, _bottomTitle, _chartW, _chartH, _posX, _posY, _spacing, _margin, _color, _showV, _listV, _rotateV, _showL) {
         //let listValues = data.map(function(x) { return x.total });
 
         this.data = _data;
         this.labels = _label;
-        console.log(this.data)
-
-        this.chartWidth = 300;
-        this.chartHeight = 300;
-
-        this.title = _title;
+        this.chartWidth = _chartW;
+        this.chartHeight = _chartH;
+        this.posX = _posX;
+        this.posY = _posY;
+        this.title = _title
         this.sideTitle = _sideTitle;
+        this.bottomTitle = _bottomTitle;
+        this.spacing = _spacing;
+        this.margin = _margin;
 
-        this.posX = 0;
-        this.posY = 0;
+        this.numTicks = 10;
 
-        this.spacing = 5;
-        this.margin = 30;
-        this.numTicks = 12;
         this.tickSpacing;
         this.barWidth;
         this.availableWidth;
-
         this.tickIncrements;
-        this.listValues;
         this.maxValue;
+
+
+
+
+        this.showValues = _showV;
+        this.showLabels = _listV;
+        this.rotateLabels = _rotateV;
+
+        this.showLegend = _showL;
 
 
         this.colors = [
@@ -35,10 +40,6 @@ class FullStackedBarChart {
             color('#02ECE8')
         ];
 
-        this.showConsumptions = true;
-        this.showLabels = true;
-        this.rotateLabels = false;
-        this.showLegend = true;
 
 
         this.calculateMaxValue();
@@ -84,11 +85,11 @@ class FullStackedBarChart {
         angleMode(DEGREES)
         push();
         rotate(270)
-        text("% of Energy Generation", (this.chartHeight / 2) - this.margin, -this.margin - (this.spacing * 2));
+        text(this.sideTitle, (this.chartHeight / 2) - this.margin, -this.margin - (this.spacing * 2));
         pop();
         push();
         textAlign(CENTER, CENTER);
-        text("Countries", this.chartWidth / 2 - this.margin, this.margin + this.spacing);
+        text(this.bottomTitle, this.chartWidth / 2 - this.margin, this.margin + this.spacing);
         pop();
     };
 
