@@ -88,7 +88,7 @@ class StackedBarChart {
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
     scaledData(num) {
-        return map(num, 0, this.maxValue, 0, this.chartHeight);
+        return map(num, 0, this.chartHeight, 0, this.chartHeight);
     }
 
     drawTickLines() {
@@ -156,7 +156,7 @@ class StackedBarChart {
                     fill(255);
                     textSize(16);
                     textAlign(CENTER, BOTTOM);
-                    text(this.data[i].values[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].values[j]));
+                    text(this.data[i].values[j], ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.data[i].values[j]);
                 }
                 pop();
                 translate(0, j - this.scaledData(this.data[i].values[j]));

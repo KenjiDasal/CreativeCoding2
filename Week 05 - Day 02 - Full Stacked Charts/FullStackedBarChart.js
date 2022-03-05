@@ -8,8 +8,8 @@ class FullStackedBarChart {
         this.chartWidth = 300;
         this.chartHeight = 300;
 
-        this.title = "Genshin Impact Rerun Sales"
-        this.sideTitle = "Genshin Impact Sales(Millions)"
+        this.title = "Solar Consumption"
+        this.sideTitle = "Number of values % (2016-20) "
 
         this.posX = 0;
         this.posY = 0;
@@ -30,12 +30,14 @@ class FullStackedBarChart {
             color('#242951'),
             color('#246390 '),
             color('#02A6EC'),
-            color('#f3646a ')
+            color('#02D3EC '),
+            color('#02ECE8')
         ];
 
-        this.showValues = true;
+        this.showvalues = true;
         this.showLabels = true;
         this.rotateLabels = false;
+        // this.showLegend = true;
 
 
         this.calculateMaxValue();
@@ -49,12 +51,10 @@ class FullStackedBarChart {
     }
 
     calculateMaxValue() {
-        let h = this.data[0].total.length
-        console.log(h)
         this.listValues = this.data.map(function(x) { return max(x.total) });
-        console.log("num",
-            this.listValues);
-        // let listValues = this.data.map(function(x) { return max(x.total[h - 3]) + max(x.total[h - 2]) + max(x.total[h - 1]) });
+        console.log("num", this.listValues);
+        this.maxValue = max(this.listValues)
+            // let listValues = this.data.map(function(x) { return max(x.total[h - 3]) + max(x.total[h - 2]) + max(x.total[h - 1]) });
         this.tickIncrements = this.maxValue / this.numTicks;
         console.log("test", this.maxValue)
 
@@ -68,7 +68,7 @@ class FullStackedBarChart {
         this.drawTitle();
         this.drawSideTitle();
         this.drawAxis();
-        // this.drawTickLines();
+        this.drawTickLines();
         this.drawHorizontalLines();
         this.drawRects();
         pop();
@@ -77,21 +77,20 @@ class FullStackedBarChart {
 
     drawTitle() {
         textAlign(CENTER, CENTER);
-        text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
+        text(this.title, (this.chartWidth / 2), -(this.chartHeight + this.margin));
     };
 
     drawSideTitle() {
         angleMode(DEGREES)
         push();
         textAlign(CENTER, CENTER);
-        rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 2, -(this.barWidth - this.margin + (this.spacing * 2)) * 2);
+        text("Countries", this.chartWidth / 2 - this.margin, this.margin + this.spacing);
         pop();
     };
 
     //this accepts a parameter(number) and scales the number to the maxValue and chartHeight
     scaledData(_num) {
-        let newValue = map(_num, 0, this.maxValue, 0, this.chartHeight);
+        let newValue = map(_num, 0, this.chartHeight, 0, this.chartHeight);
         return newValue;
     }
 
@@ -129,23 +128,20 @@ class FullStackedBarChart {
         translate(this.margin, 0);
         push();
         for (let i = 0; i < this.data.length; i++) {
-            let j = 0;
-            let colorNum = i % 1;
-            fill(this.colors[colorNum]);
 
             push();
-            for (let j = 0; j < this.data[i].values.length; j++) {
-                let colorNum = j % 4;
+            for (let j = 0; j < 5; j++) {
+                let colorNum = j % 5;
                 //bars
                 push();
                 fill(this.colors[colorNum]);
                 noStroke();
                 // rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].values[j]));
-                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -this.scaledData(this.data[i].values[j]));
+                rect((this.barWidth + this.spacing) * i, 0, this.barWidth, -(this.data[i].values[j] / this.data[i].total) * this.chartHeight);
 
 
                 pop();
-                translate(0, j - this.scaledData(this.data[i].values[j]));
+                translate(0, j - (this.data[i].values[j] / this.data[i].total) * this.chartHeight);
 
             }
             pop();
@@ -157,18 +153,41 @@ class FullStackedBarChart {
 
 
                 push();
-                if (this.showValues) {
+                if (this.showvalues) {
                     noStroke();
                     fill(255);
                     textSize(16);
                     textAlign(CENTER, BOTTOM);
-                    text(round((this.data[i].values[j]) / this.maxValue * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -this.scaledData(this.data[i].values[j]) / 2);
+                    text(round((this.data[i].values[j] / this.data[i].total) * 100), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].values[j] / this.data[i].total) * this.chartHeight / 2);
                 }
                 pop();
-                translate(0, j - this.scaledData(this.data[i].values[j]));
+                translate(-1, j - (this.data[i].values[j] / this.data[i].total) * this.chartHeight);
 
             }
             pop();
+
+            // //legend
+            // push();
+            // for (let j = 0; j < this.data[i].values.length; j++) {
+            //     let colorNum = j % 5;
+
+            //     push();
+            //     fill(this.colors[colorNum]);
+            //     // if (this.showvalues) {
+            //     rect(this.chartWidth - 30, -this.chartHeight / 2, 20, 20)
+            //     noStroke();
+            //     fill(255);
+            //     textSize(16);
+            //     textAlign(CENTER, BOTTOM);
+            //     text(this.labels[0].year[j], this.chartWidth + 20, -this.chartHeight / 2 + 20);
+            //     // }
+            //     pop();
+            //     translate(0, j + 40);
+
+            // }
+            // pop();
+
+
 
 
             //text

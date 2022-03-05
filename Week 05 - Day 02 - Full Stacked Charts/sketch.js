@@ -39,9 +39,10 @@ function setup() {
 function draw() {
     background(127);
 
-    push();
+    firstChart.updateValue();
     firstChart.render();
-    pop();
+
+
     // push();
     // chart02.render();
     // pop();
