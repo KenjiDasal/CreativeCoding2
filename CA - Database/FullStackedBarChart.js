@@ -1,5 +1,5 @@
 class FullStackedBarChart {
-    constructor(_data, _label, _title, _sideTitle, _bottomTitle, _chartW, _chartH, _posX, _posY, _spacing, _margin, _color, _showV, _listV, _rotateV, _showL) {
+    constructor(_data, _label, _title, _sideTitle, _bottomTitle, _chartW, _chartH, _posX, _posY, _spacing, _margin, _showV, _listV, _rotateV, _showL) {
         //let listValues = data.map(function(x) { return x.total });
 
         this.data = _data;
@@ -227,7 +227,7 @@ class FullStackedBarChart {
             pop();
 
 
-            //numbers (text)
+            // //numbers (text)
             // push();
             // for (let j = 0; j < this.data[i].total.length; j++) {
 
@@ -237,10 +237,10 @@ class FullStackedBarChart {
             //         fill(255);
             //         textSize(16);
             //         textAlign(CENTER, BOTTOM);
-            //         text((this.data[i].gen )), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].gen / this.data[i].total) * this.chartHeight / 2);
+            //         text((this.data[i].Code), ((this.barWidth + this.spacing) * i) + j + this.barWidth / 2, -(this.data[i].Code / this.data[i].total) * this.chartHeight / 2);
             //     }
             //     pop();
-            //     translate(-1, j - (this.data[i].gen / this.data[i].total) * this.chartHeight);
+            //     translate(-1, j - (this.data[i].Code / this.data[i].total) * this.chartHeight);
 
             // }
             // pop();
