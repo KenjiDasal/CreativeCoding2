@@ -18,23 +18,23 @@ let labels = [
 
 
 function setup() {
-    createCanvas(1500, 1000);
+    createCanvas(2500, 1000);
     generateData()
     background(127);
 
     //(_data, _label, _title, _sideTitle, _chartW, _chartH, _posX, _posY, _spacin, _margin, _color, _showV, _listV, _rotateV, _showL)
 
-    firstChart = new HorizontalBarChart(data, "Total Consumption", "Consumption (TWh)", 400, 400, 100, 700, 5, 30, true, true, false);
+    firstChart = new HorizontalBarChart(data, "Total Consumption", "Consumption (TWh)", 800, 500, 100, 800, 5, 30, true, true, false);
     firstChart.updateValue();
 
-    secondChart = new VerticalBarChart(data, "Total Investment", "Investment (Billion)", 700, 500, 600, 700, 10, 30, true, true, false);
+    secondChart = new VerticalBarChart(data, "Total Investment", "Investment (Billion)", 800, 500, 100, 1450, 10, 30, true, true, false);
     secondChart.updateValue();
 
     //constructor(_data, _label, _title, _sideTitle, _bottomTitle, _chartW, _chartH, _posX, _posY, _spacing, _margin, _color, _showV, _listV, _rotateV, _showL) {
-    thirdChart = new FullStackedBarChart(data, labels, "Generation per TWh (2015-2020)", "% of Energy Generation", "Countries", 700, 500, 100, 1400, 5, 30, true, true, false, true);
+    thirdChart = new FullStackedBarChart(data, labels, "Generation per TWh (2015-2020)", "% of Energy Generation", "Countries", 1300, 1150, 1000, 1450, 5, 30, true, true, false, true);
     thirdChart.updateValue();
 
-    fourthChart = new PlotChart(data, "Investment VS Consumption", "Investment (Billions)", "Consumption (TWh)", 500, 500, 1400, 700, 5, 30, true, true, false);
+    fourthChart = new PlotChart(data, "Investment VS Consumption", "Investment (Billions)", "Consumption (TWh)", 2000, 1150, 2500, 1450, 5, 30, true, true, false);
     fourthChart.updateValue();
 
 }
@@ -43,7 +43,7 @@ function setup() {
 
 function draw() {
     background(127);
-    scale(.68)
+    scale(0.35)
     firstChart.updateValue();
     firstChart.render();
 

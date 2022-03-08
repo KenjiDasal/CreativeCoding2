@@ -85,11 +85,11 @@ class FullStackedBarChart {
         angleMode(DEGREES)
         push();
         rotate(270)
-        text(this.sideTitle, (this.chartHeight / 2) - this.margin, -this.margin - (this.spacing * 2));
+        text(this.sideTitle, (this.chartHeight / 2) - this.margin, -this.margin * 2);
         pop();
         push();
         textAlign(CENTER, CENTER);
-        text(this.bottomTitle, this.chartWidth / 2 - this.margin, this.margin + this.spacing);
+        text(this.bottomTitle, this.chartWidth / 2 - this.margin, this.margin * 2);
         pop();
     };
 
@@ -109,7 +109,7 @@ class FullStackedBarChart {
             //numbers (text)
             fill(255, 200);
             noStroke();
-            textSize(14);
+            textSize(20);
             textAlign(RIGHT, CENTER);
             text(round((i * this.tickIncrements) / this.data[3].total * 100), -15, this.tickSpacing * -i);
         }
@@ -256,7 +256,7 @@ class FullStackedBarChart {
                     push();
                     noStroke();
                     fill(255);
-                    textSize(14);
+                    textSize(20);
                     textAlign(CENTER, BOTTOM);
                     translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
                     rotate(PI / 2);
@@ -266,9 +266,9 @@ class FullStackedBarChart {
                     push();
                     noStroke();
                     fill(255);
-                    textSize(14);
+                    textSize(20);
                     textAlign(CENTER, BOTTOM);
-                    text(this.data[i].Code, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20);
+                    text(this.data[i].Code, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.margin);
                     pop();
                 }
             }
@@ -291,7 +291,8 @@ class FullStackedBarChart {
             fill(255);
             textSize(16);
             textAlign(CENTER, BOTTOM);
-            text(this.labels[0].year[j], this.chartWidth + this.margin + (this.spacing * 3), -this.chartHeight / 2 + 20);
+            text("TWh " +
+                this.labels[0].year[j], this.chartWidth + this.margin * 2 + this.spacing, -this.chartHeight / 2 + 20);
             // }
             pop();
             translate(0, j + 40);

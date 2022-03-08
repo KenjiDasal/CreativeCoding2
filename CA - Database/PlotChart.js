@@ -34,7 +34,7 @@ class PlotChart {
             color('#246390 '),
             color('#02A6EC'),
             color('#02D3EC '),
-            color('#02ECE8')
+            color('#02DCE8')
         ];
 
         this.showValues = true;
@@ -47,9 +47,12 @@ class PlotChart {
     }
 
     updateValue() {
-        this.tickSpacing = this.chartHeight / this.numTicks; //space between ticks on  the left 
+        this.tickXSpacing = this.chartWidth / this.numTicks; //space between ticks on  the left 
+        this.tickYSpacing = this.chartHeight / this.numTicks; //space between ticks on  the left 
         this.availableWidth = this.chartWidth - (this.margin * 2) - (this.spacing * (this.data.length - 1)); //available space for bars
         this.barWidth = this.availableWidth / this.data.length; //bar widt
+        this.availableHeight = this.chartHeight - (this.margin * 2) - (this.spacing * (this.data.length - 1)); //available space for bars
+        this.barHeight = this.availableHeight / this.data.length; //bar widt
     }
 
     calculateMaxYValue() {
@@ -79,7 +82,8 @@ class PlotChart {
 
     drawTitle() {
         textAlign(CENTER, CENTER);
-        text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
+        textSize(24);
+        text(this.title, (this.chartWidth / 2), -(this.chartHeight + this.margin));
     };
 
 
@@ -97,14 +101,14 @@ class PlotChart {
         for (let i = 0; i <= this.numTicks; i++) {
             //ticks
             stroke(255);
-            line(0, this.tickSpacing * -i, -10, this.tickSpacing * -i);
+            line(0, this.tickYSpacing * -i, -10, this.tickYSpacing * -i);
 
             //numbers (text)
             fill(255, 200);
             noStroke();
-            textSize(16);
+            textSize(20);
             textAlign(RIGHT, CENTER);
-            text((i * this.tickYIncrements).toFixed(), -15, this.tickSpacing * -i);
+            text((i * this.tickYIncrements).toFixed(), -15, this.tickYSpacing * -i);
         }
     }
 
@@ -112,14 +116,14 @@ class PlotChart {
         for (let i = 0; i <= this.numTicks; i++) {
             //ticks
             stroke(255);
-            line(0, this.tickSpacing * -i, -10, this.tickSpacing * -i);
+            line((this.tickXSpacing) * i, 0, this.tickXSpacing * i, 10);
 
             //numbers (text)
             fill(255, 200);
             noStroke();
-            textSize(16);
+            textSize(20);
             textAlign(RIGHT, CENTER);
-            text((i * this.tickXIncrements).toFixed(), this.tickSpacing * i, 20);
+            text(((this.tickXIncrements) * i).toFixed(0), this.numTicks + i, 20, this.tickXSpacing * i);
         }
     }
 
@@ -127,7 +131,7 @@ class PlotChart {
         for (let i = 0; i <= this.numTicks; i++) {
             //horizontal line
             stroke(255, 100);
-            line(0, this.tickSpacing * -i, this.chartWidth, this.tickSpacing * -i);
+            line(0, this.tickYSpacing * -i, this.chartWidth, this.tickYSpacing * -i);
 
         }
 
@@ -139,7 +143,7 @@ class PlotChart {
         push();
         textAlign(CENTER, CENTER);
         rotate(270);
-        text(this.sideTitle, (this.chartHeight / 2 - this.margin), -(this.barWidth - this.margin + (this.spacing + this.margin) * 2));
+        text(this.sideTitle, (this.chartHeight / 2), -this.margin * 2);
         pop();
         text(this.bottomTitle, this.chartWidth / 2 - this.margin, (this.margin + this.spacing) * 2);
     };
@@ -161,14 +165,14 @@ class PlotChart {
             fill(this.colors[colorNum]);
             noStroke();
 
-            ellipse(this.scaledXData(this.data[i].Consumption) - this.margin, this.scaledYData(-this.data[i].Cost), this.data[i].total / 5, this.data[i].total / 5)
+            ellipse(this.scaledXData(this.data[i].Consumption) - this.margin, this.scaledYData(-this.data[i].Cost), this.data[i].total / 4, this.data[i].total / 4)
 
 
             //numbers (text)
             if (this.showValues) {
                 noStroke();
                 fill(255);
-                textSize(16);
+                textSize(24);
                 textAlign(CENTER, BOTTOM);
                 text(this.data[i].Code, this.scaledXData(this.data[i].Consumption) - this.margin, this.scaledYData(-this.data[i].Cost));
 

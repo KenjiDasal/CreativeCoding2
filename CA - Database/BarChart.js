@@ -68,7 +68,8 @@ class VerticalBarChart {
 
     drawTitle() {
         textAlign(CENTER, CENTER);
-        text(this.title, (this.chartHeight / 2), -(this.chartHeight + this.margin));
+        textSize(24);
+        text(this.title, (this.chartWidth / 2), -(this.chartHeight + this.margin));
     };
 
 
@@ -86,9 +87,9 @@ class VerticalBarChart {
             //numbers (text)
             fill(255, 200);
             noStroke();
-            textSize(14);
+            textSize(20);
             textAlign(RIGHT, CENTER);
-            text((i * this.tickIncrements).toFixed(), -15, this.tickSpacing * -i);
+            text((i * this.tickIncrements).toFixed(), -10, this.tickSpacing * -i);
         }
     }
 
@@ -106,7 +107,7 @@ class VerticalBarChart {
         push();
         textAlign(CENTER, CENTER);
         rotate(270);
-        text(this.sideTitle, (this.barWidth + this.margin) * 4, -(this.barWidth - this.margin + (this.spacing * 4)));
+        text(this.sideTitle, this.chartHeight / 2, -this.margin * 2);
         pop();
     };
 
@@ -131,7 +132,7 @@ class VerticalBarChart {
             if (this.showValues) {
                 noStroke();
                 fill(255);
-                textSize(16);
+                textSize(20);
                 textAlign(CENTER, BOTTOM);
                 text(this.data[i].Cost, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, this.scaledData(-this.data[i].Cost));
             }
@@ -143,7 +144,7 @@ class VerticalBarChart {
                     push();
                     noStroke();
                     fill(255);
-                    textSize(14);
+                    textSize(20);
                     textAlign(CENTER, BOTTOM);
                     translate(((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20)
                     rotate(PI / 2);
@@ -153,7 +154,7 @@ class VerticalBarChart {
                     push();
                     noStroke();
                     fill(255);
-                    textSize(14);
+                    textSize(20);
                     textAlign(CENTER, BOTTOM);
                     text(this.data[i].Code, ((this.barWidth + this.spacing) * i) + this.barWidth / 2, 20);
                     pop();
